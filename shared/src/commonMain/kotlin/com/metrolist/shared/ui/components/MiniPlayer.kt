@@ -180,7 +180,7 @@ fun MiniPlayer(
     val effectiveSeedColor = artworkSeedColor ?: baseSeedColor
     val gradientColors = remember(effectiveSeedColor) { getGradientColors(effectiveSeedColor) }
 
-    val backgroundColor = if (useSolidBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer
+    val backgroundColor = if (useSolidBlack) Color.Black.copy(alpha = 0.10f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f)
     val contentColor = if (useSolidBlack || useBlur || useGradient) Color.White else MaterialTheme.colorScheme.onSurface
     val secondaryContentColor = if (useBlur) contentColor else contentColor.copy(alpha = 0.7f)
     val buttonBorderColor = contentColor.copy(alpha = 0.25f)
@@ -245,7 +245,7 @@ fun MiniPlayer(
                 },
         onClick = onExpand,
         cornerRadius = cornerRadius,
-        elevation = 8.dp,
+        elevation = 0.dp,
         color = backgroundColor,
         border =
             BorderStroke(

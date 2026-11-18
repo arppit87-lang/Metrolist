@@ -37,7 +37,7 @@ import com.metrolist.shared.utils.artworkColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-val DefaultThemeColor = Color(0xFF6750A4)
+val DefaultThemeColor = Color(0xFFFA243C)
 
 // Official material-color-utilities Score fallback (Google Blue), used when the artwork has no usable colour.
 val ArtworkFallbackSeedColor = Color(0xFF4285F4)
@@ -92,11 +92,8 @@ fun MetrolistTheme(
 
     val colorScheme =
         remember(baseColorScheme, pureBlack, darkTheme) {
-            if (darkTheme && pureBlack) {
-                baseColorScheme.pureBlack()
-            } else {
-                baseColorScheme
-            }
+            val themed = if (darkTheme && pureBlack) baseColorScheme.pureBlack() else baseColorScheme
+            themed.appleGlass(darkTheme)
         }
 
     val motionScheme = remember { MotionScheme.expressive() }
@@ -161,6 +158,20 @@ private fun generatedColorScheme(
         contrastLevel = contrastLevel,
         specVersion = ColorSpec.SpecVersion.SPEC_2025,
     )
+
+fun ColorScheme.appleGlass(isDark: Boolean): ColorScheme {
+    val glassBase = if (isDark) Color.White else Color.Black
+    return copy(
+        surfaceContainerLowest = glassBase.copy(alpha = 0.06f),
+        surfaceContainerLow = glassBase.copy(alpha = 0.08f),
+        surfaceContainer = glassBase.copy(alpha = 0.10f),
+        surfaceContainerHigh = glassBase.copy(alpha = 0.12f),
+        surfaceContainerHighest = glassBase.copy(alpha = 0.15f),
+        surfaceVariant = glassBase.copy(alpha = 0.10f),
+        outline = glassBase.copy(alpha = 0.22f),
+        outlineVariant = glassBase.copy(alpha = 0.14f),
+    )
+}
 
 fun ColorScheme.pureBlack() =
     copy(

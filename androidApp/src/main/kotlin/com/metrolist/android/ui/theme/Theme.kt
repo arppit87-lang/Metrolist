@@ -46,6 +46,7 @@ import com.metrolist.shared.ui.theme.MetrolistShapes
 import com.metrolist.shared.ui.theme.ThemeColorExtractor
 import com.metrolist.shared.ui.theme.animateColorScheme
 import com.metrolist.shared.ui.theme.orIfIllegible
+import com.metrolist.shared.ui.theme.appleGlass
 import com.metrolist.shared.ui.theme.pureBlack
 import com.metrolist.shared.ui.theme.themeColorScheme
 import kotlinx.coroutines.Dispatchers
@@ -118,11 +119,8 @@ fun MetrolistTheme(
 
     val colorScheme =
         remember(baseColorScheme, pureBlack, darkTheme) {
-            if (darkTheme && pureBlack) {
-                baseColorScheme.pureBlack()
-            } else {
-                baseColorScheme
-            }
+            val themed = if (darkTheme && pureBlack) baseColorScheme.pureBlack() else baseColorScheme
+            themed.appleGlass(darkTheme)
         }
 
     val motionScheme = remember { MotionScheme.expressive() }

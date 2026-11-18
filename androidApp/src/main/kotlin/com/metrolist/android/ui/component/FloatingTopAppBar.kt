@@ -7,7 +7,9 @@
 
 package com.metrolist.android.ui.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -37,15 +39,15 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 
 private val FloatingBarElementSize = 48.dp
-private val FloatingBarElementShadow = 4.dp
+private val FloatingBarElementShadow = 0.dp
 
 /** Modifier that makes any 48dp action (such as the account button) look like a floating circle. */
 @Composable
 fun Modifier.floatingBarCircle(): Modifier =
     this
         .size(FloatingBarElementSize)
-        .shadow(FloatingBarElementShadow, CircleShape)
-        .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape)
+        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f), CircleShape)
+        .border(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.18f), CircleShape)
 
 /**
  * Icon button used by the top bar. Renders as a plain [IconButton] in the classic top bar,
@@ -68,8 +70,8 @@ fun TopBarIconButton(
             shape = CircleShape,
             colors =
                 IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                 ),
             content = content,
         )
@@ -106,8 +108,9 @@ fun FloatingTopAppBar(
         Surface(
             modifier = Modifier.weight(1f).height(FloatingBarElementSize),
             shape = CircleShape,
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
             contentColor = MaterialTheme.colorScheme.onSurface,
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.18f)),
             shadowElevation = FloatingBarElementShadow,
         ) {
             Row(

@@ -11,6 +11,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -54,7 +55,7 @@ val LocalFloatingNavBar = compositionLocalOf { false }
 
 private val FloatingBarHeight = 64.dp
 private val FloatingItemHeight = 48.dp
-private val FloatingBarShadow = 6.dp
+private val FloatingBarShadow = 0.dp
 private val NavSpring = spring<Float>(dampingRatio = 0.9f, stiffness = 700f)
 
 @Composable
@@ -121,8 +122,9 @@ private fun <T> FloatingNavigationBar(
         Surface(
             modifier = Modifier.wrapContentWidth().height(FloatingBarHeight),
             shape = CircleShape,
-            color = MaterialTheme.colorScheme.surfaceContainer,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
             contentColor = MaterialTheme.colorScheme.onSurface,
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.20f)),
             shadowElevation = FloatingBarShadow,
         ) {
             Row(
@@ -144,11 +146,11 @@ private fun <T> FloatingNavigationBar(
         if (separateItem != null) {
             val selected = separateItem.key == selectedKey
             val container by animateColorAsState(
-                if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer,
+                if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.22f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
                 label = "floatingSearchContainer",
             )
             val content by animateColorAsState(
-                if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
+                if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                 label = "floatingSearchContent",
             )
             Surface(
@@ -157,6 +159,7 @@ private fun <T> FloatingNavigationBar(
                 shape = CircleShape,
                 color = container,
                 contentColor = content,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.20f)),
                 shadowElevation = FloatingBarShadow,
             ) {
                 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
@@ -178,11 +181,11 @@ private fun <T> FloatingNavigationItem(
     modifier: Modifier = Modifier,
 ) {
     val indicator by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0f),
+        if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.18f) else MaterialTheme.colorScheme.primary.copy(alpha = 0f),
         label = "floatingItemIndicator",
     )
     val contentColor by animateColorAsState(
-        if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+        if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
         label = "floatingItemContent",
     )
     Row(

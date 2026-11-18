@@ -10,6 +10,7 @@ package com.metrolist.shared.ui.design.expressive.components
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -135,8 +136,8 @@ fun ExpressiveMiniPlayer(
     val buttons = settings.expressiveMiniPlayerButtons
     val haptics = rememberMetrolistHaptics()
     val scheme = MaterialTheme.colorScheme
-    val containerColor = scheme.primaryContainer
-    val onContainer = scheme.onPrimaryContainer
+    val containerColor = scheme.onSurface.copy(alpha = 0.10f)
+    val onContainer = scheme.onSurface
     val artworkShape = if (settings.expressiveMiniPlayerCookieArtwork) currentSongArtworkShape() else CircleShape
     val marquee = rememberTrackMarquee(song.id, active, 3_000L)
     val layoutDirection = LocalLayoutDirection.current
@@ -208,7 +209,8 @@ fun ExpressiveMiniPlayer(
         cornerRadius = ExpressiveMiniPlayerCornerRadius,
         expressive = true,
         color = containerColor,
-        elevation = 3.dp,
+        border = BorderStroke(1.dp, scheme.onSurface.copy(alpha = 0.20f)),
+        elevation = 0.dp,
     ) {
         BoxWithConstraints(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp)) {
             val controlsMaxWidth = maxWidth * 0.5f
